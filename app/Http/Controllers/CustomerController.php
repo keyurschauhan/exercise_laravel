@@ -244,13 +244,12 @@ class CustomerController extends Controller
     public function load_autocomplete_designation(Request $request){
 
         $response=[];
-        $designation_detail=CustomerContactDetail::where('designation', 'like', '%' . $request['query'] . '%')->where('created_by',Auth::user()->id)->pluck('designation');
-        
+        $designation_detail=CustomerContactDetail::where('designation', 'like', '%' . $request['query'] . '%')->pluck('designation');
 
         if(count($designation_detail) > 0)
         {
             foreach ($designation_detail as $value) {
-                $response[] = array("value"=>$value->designation,"data"=>$value->designation);
+                $response[] = array("value"=>$value,"data"=>$value);
             }   
         }
         return json_encode(array("suggestions" => $response));
